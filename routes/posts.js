@@ -26,7 +26,17 @@ router.post('/', async (req, res) => {
     } catch (error) {
         res.json({message: error})
     }
-    
+
+})
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const removeArticle = await Article.remove({_id: req.params.id})
+        res.json(removedArticle)
+    } catch (e) {
+        res.json({message: e})
+    }
+
 })
 
 module.exports = router
