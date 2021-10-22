@@ -7,12 +7,14 @@ require('dotenv').config()
 
 const postRoutes = require('./routes/posts')
 const questionRoutes = require('./routes/questions')
+const usersRoutes = require('./routes/users')
 
 // Middlewares
 
 app.use(express.json())
 app.use('/posts', postRoutes)
 app.use('/questions', questionRoutes)
+app.use('/users', usersRoutes)
 
 // ROUTES
 
