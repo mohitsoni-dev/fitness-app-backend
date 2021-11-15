@@ -68,7 +68,7 @@ exports.Login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "Cannot authorize user.",
       });
@@ -77,14 +77,14 @@ exports.Login = async (req, res) => {
     const user = await User.findOne({ email: email });
     // NOT FOUND - Throw error
     if (!user) {
-      return res.status(404).json({
+      return res.status(200).json({
         error: true,
         message: "Account not found",
       });
     }
     //2. Throw error if account is not activated
     if (!user.active) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "You must verify your email to activate your account"
       });
@@ -92,7 +92,7 @@ exports.Login = async (req, res) => {
     //3. Verify the password is valid
     const isValid = await User.comparePasswords(password, user.password);
     if (!isValid) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "Invalid credentials",
       });
