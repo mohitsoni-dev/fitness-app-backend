@@ -76,24 +76,30 @@ exports.Login = async (req, res) => {
     //1. Find if any account with that email exists in DB
     const user = await User.findOne({ email: email });
     // NOT FOUND - Throw error
+    // Error code 1
     if (!user) {
       return res.status(200).json({
         error: true,
+        errorCode: 1,
         message: "Account not found",
       });
     }
     //2. Throw error if account is not activated
+    // Error code 2
     if (!user.active) {
       return res.status(200).json({
         error: true,
+        errorCode: 2,
         message: "You must verify your email to activate your account"
       });
     }
     //3. Verify the password is valid
+    // Error code 3
     const isValid = await User.comparePasswords(password, user.password);
     if (!isValid) {
       return res.status(200).json({
         error: true,
+        errorCode: 3,
         message: "Invalid credentials",
       });
     }
@@ -102,6 +108,7 @@ exports.Login = async (req, res) => {
     //Success
     return res.send({
       success: true,
+      error: false,
       message: "User logged in successfully",
       user: user
     });
