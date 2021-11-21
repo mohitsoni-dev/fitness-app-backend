@@ -154,6 +154,7 @@ exports.Activate = async (req, res) => {
       await user.save();
       return res.status(200).json({
         success: true,
+        user: user,
         message: "Account activated.",
       });
     }
